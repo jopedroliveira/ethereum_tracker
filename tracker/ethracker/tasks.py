@@ -17,10 +17,10 @@ from django.conf import settings
 from .models import Address
 
 @periodic_task(run_every=timedelta(seconds=10))
-def ping():
+def status_ping():
   print(">>>> pong")
 
-# @periodic_task(run_every=timedelta(seconds=60))
+@periodic_task(run_every=timedelta(seconds=60))
 def fetch_balance_from_api():
    addresses = Address.list_all()
    for address in addresses:
