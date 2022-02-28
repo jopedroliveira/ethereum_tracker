@@ -1,35 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
 {% csrf_token %}
+
   <div class="container">
-    <a href="{% url 'home' %}">back</a>
-    <h1>Address - {{ address.address }}</h1>
-    <table>
-      <thead>
-      <tr>
-        <th></th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>Balance</td>
-        <td>{{ address.current_balance }}</td>
-      </tr>
-      <tr>
-        <td>Balance Verified</td>
-        <td>{{ address.confirmed_balance }}</td>
-      </tr>
-      <tr>
-        <td>Deposit</td>
-        <td>{{ address.total_deduced }}</td>
-      </tr>
-      <tr>
-        <td>Deducted</td>
-        <td>{{ address.total_deposit }}</td>
-      </tr>
-      </tbody>
-    </table>
-    <p>Tracked since: {{ address.creation_date }}</p>
+    <br/>
+    <a href="/" class="btn btn-outline-secondary btn-sm" role="button">Back</a>
+    <div class="card-deck mb-3 text-center">
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal"><span class="text-primary">0x</span>{{ address.address }}</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mt-3 mb-4">
+            <li><span class="text-secondary">Tracked since:</span> {{ address.creation_date }}</li>
+            <li><span class="text-secondary">Current balance:</span> {{ address.current_balance }}</li>
+            <li><span class="text-secondary">Verified balance:</span> {{ address.confirmed_balance }}</li>
+            <li><span class="text-secondary">Total deduced (since tracking start):</span> {{ address.total_deduced }}</li>
+            <li><span class="text-secondary">Total deposit (since tracking start):</span> {{ address.total_deposit }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
+
 {% endblock %}
