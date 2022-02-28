@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+{% csrf_token %}
+  <div class="container">
+    <a href="{% url 'home' %}">back</a>
+    <h1>Address - {{ address.address }}</h1>
+    <table>
+      <thead>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Balance</td>
+        <td>{{ address.current_balance }}</td>
+      </tr>
+      <tr>
+        <td>Balance Verified</td>
+        <td>{{ address.confirmed_balance }}</td>
+      </tr>
+      <tr>
+        <td>Deposit</td>
+        <td>{{ address.total_deduced }}</td>
+      </tr>
+      <tr>
+        <td>Deducted</td>
+        <td>{{ address.total_deposit }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <p>Tracked since: {{ address.creation_date }}</p>
+  </div>
+{% endblock %}
