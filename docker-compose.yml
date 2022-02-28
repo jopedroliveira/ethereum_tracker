@@ -39,7 +39,7 @@ services:
     build:
       context: .
       dockerfile: web.Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000 --settings=tracker.settings.local
+    command: python manage.py runserver 0.0.0.0:8000 --settings=tracker.settings.production
     volumes:
       - .:/tracker
     ports:

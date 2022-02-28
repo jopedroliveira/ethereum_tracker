@@ -6,6 +6,9 @@ from ethracker.forms import TrackForm
 
 
 class HomeLogic:
+  """
+  Logic class to handle Home requests
+  """
   def addresses_list(self, request, *args, **kwargs):
     try:
       # from .tasks import fetch_from_api
@@ -19,6 +22,9 @@ class HomeLogic:
 
 
 class HomeController(View, HomeLogic):
+  """
+  Home page controller
+  """
   def get(self, request, *args, **kwargs):
     url_name = resolve(request.path_info).url_name
 

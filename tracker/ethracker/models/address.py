@@ -8,6 +8,9 @@ address_validator = RegexValidator(r'^[a-fA-F0-9]*$',
 
 
 class Address(models.Model, CoreModel):
+  """
+  Django model to store data from ethereum address
+  """
   address = models.CharField(max_length=40, blank=False, null=False, unique=True)
   current_balance = models.BigIntegerField(default=None, null=True, blank=True)
   confirmed_balance = models.BigIntegerField(default=None, null=True, blank=True)
@@ -19,26 +22,54 @@ class Address(models.Model, CoreModel):
 
   @classmethod
   def create(cls, address):
+    """
+    Create an Address object and commits to database
+    :param address:
+    :return:
+    """
     # todo: validate address
-    return cls.objects.create(address=address)
+    new_address = cls.objects.create(address=address)
+    new_address.force_update()
+    return new_address
 
   @classmethod
   def list_all(cls):
-    return cls.objects.all().order_by('id')
+    """
+    List of Addresses on database
+    :return:
+    """
+    return cls.objects.all().order_by('-creation_date')
 
   @classmethod
   def get_by_ethaddr(cls, ethaddr):
+    """
+    Find an address object on database by ethereum address
+    :param ethaddr:
+    :return:
+    """
     try:
       return cls.objects.get(address=ethaddr)
     except Exception as e:
       print(e)
 
   def update_current_balance(self, balance):
-    self.set('current_balance', balance)
+    """
+    Updates the current balance of an ethereum address
+    :param balance:
+    :return:
+    """
+    self.set('current_balance', int(balance))
     self.set('last_updated', timezone.now())
 
   def update_confirmed_balance(self, balance, no_blocks):
+    """
+    Updates the confirmed balance and number of confirm blocks of an ethereum address
+    :param balance:
+    :param no_blocks:
+    :return:
+    """
     #fixme: must be confirmed balance
+    balance = int(balance)
     current_balance = self.current_balance if self.current_balance else 0
     diff = balance - current_balance
     if diff > 0:
@@ -50,3 +81,12 @@ class Address(models.Model, CoreModel):
 
     self.set('confirmed_balance', balance)
     self.set('confirmed_blocks_no', no_blocks)
+
+  def force_update(self):
+    """
+    Triggers a celery task to update the Address data
+    :return:
+    """
+    from ..tasks import fetch_force_update_api
+    fetch_force_update_api.delay(self)
+
