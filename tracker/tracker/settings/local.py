@@ -10,7 +10,7 @@ ETHSCAN_API_KEY = "C2USV4YSJ5NWVA3SECN9XJ48KF9JJ1EBVJ"
 
 # CELERY
 
-BROKER_URL = 'amqp://guest:guest@127.0.0.1//'
+BROKER_URL = 'amqp://guest:guest@127.0.0.1:5672//'
 # see https://docs.celeryproject.org/en/3.1/getting-started/brokers/sqs.html#caveats
 BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 2700,
                             'max_retries': 2}  # 30 minutes | 2 retries max
