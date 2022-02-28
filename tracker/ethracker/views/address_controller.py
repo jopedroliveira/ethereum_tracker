@@ -25,6 +25,9 @@ class AddressLogic:
       print(e)
       return render(request, '500.html', {})
 
+  from django.views.decorators.csrf import csrf_exempt
+
+  @csrf_exempt
   def track_post(self, request, *args, **kwrags):
     try:
       context = {}
