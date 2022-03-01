@@ -61,3 +61,65 @@ PostgreSQL would be a better fit.
 4. Notification by email when a change occures
 5. REST Api for frontend framework or third-party apps
 6. Nginx webserver + gunicorn for deploy/staging (docker) environment
+
+
+---
+
+## Development
+
+#### Django environment
+1. Install Python3.7 and RabbitMQ
+2. Install [Python Pip](https://pip.pypa.io/en/stable/installation/)
+3. Create a virtualenvironemnt
+```
+$ python3 -m venv env
+```
+3. Activate environment 
+```
+$ source env/bin/activate
+```
+4. Install project requirements
+```
+$ pip install -m requirements.txt
+```
+5. Run database migrations
+```
+$ python manage.py migrate --settings=tracker.settings.local
+```
+6. Run the project
+```
+$ python manage.py runserver --settings=tracker.settings.local
+```
+
+#### Rabbimq session
+1. In a terminal session, launch Rabbitmq
+```
+$ rabbitmq-server
+```
+
+#### Celery session
+
+1. Open two terminal sessions, one for beat and other for worker
+2. For each session, activate the environment
+```
+$ source env/bin/activate
+```
+3. Launch beat
+```
+celery -A tracker beat -l INFO
+```
+
+4. Launch worker
+```
+celery -A tracker worker -l INFO
+```
+
+## Launch the project with [Docker](https://docs.docker.com/)
+
+Run server:
+`docker-compose -f docker-compose.yml up`
+
+Run tests:
+`docker-compose -f docker-compose.test.yml up`
+
+
