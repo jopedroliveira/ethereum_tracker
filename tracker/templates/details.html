@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+  {% csrf_token %}
+
+  <div class="container">
+    <br/>
+    <a href="/" class="btn btn-outline-secondary btn-sm" role="button">Back</a>
+    <div class="card-deck mb-3 text-center">
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal"><span class="text-primary">0x</span>{{ address.address }}</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mt-3 mb-4">
+            <li><span class="text-secondary">Tracked since:</span> {{ address.creation_date }}</li>
+            <li><span class="text-secondary">Current balance:</span> {{ address.current_balance }}</li>
+            <li><span class="text-secondary">Verified balance:</span> {{ address.confirmed_balance }}</li>
+            <li><span class="text-secondary">Total deduced (since tracking start):</span> {{ address.total_deduced }}</li>
+            <li><span class="text-secondary">Total deposit (since tracking start):</span> {{ address.total_deposit }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <br/>
+    <div>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Transaction ID</th>
+        </tr>
+        </thead>
+        <tbody>
+          {% for transaction in transactions %}
+            <tr><th>{{ transaction.hash }}</th></tr>
+          {% empty %}
+            <tr><th>No transactions</th></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if transactions|length > 0 %}
+      <div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="{% url 'address_status' ethaddr=address.address %}?page={{ previous_page }}">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="{% url 'address_status' ethaddr=address.address %}?page={{ page }}">{{ page }}</a></li>
+            <li class="page-item"><a class="page-link" href="{% url 'address_status' ethaddr=address.address %}?page={{ next_page }}">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+  {% endif %}
+
+
+
+
+  </div>
+
+{% endblock %}

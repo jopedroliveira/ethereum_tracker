@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+  {% csrf_token %}
+  <div class="container">
+    <div class="list-group">
+      <div class="list-group-item list-group-item d-flex gap-3 py-3">
+        <div class="d-flex gap-2 w-100 justify-content-between">
+          <a href="{% url 'address_track' %}"
+             class="btn btn-outline-primary btn-sm" role="button">Track new</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-group">
+      {% for address in addresses %}
+        <a href="{% url 'address_status' ethaddr=address.address %}"
+           class="list-group-item list-group-item-action d-flex gap-3 py-3"
+           aria-current="true">
+          <div class="d-flex gap-2 w-100 justify-content-between">
+            <div>
+              <h6 class="mb-0"><span class="text-primary">0x</span>{{ address.address }}</h6>
+              <small class="mb-0 opacity-75">Last updated:
+                {{ address.last_updated|date:"d M Y, H:i:s" }}</small>
+            </div>
+            <i class="fa-brands fa-ethereum"></i>
+          </div>
+        </a>
+      {% empty %}
+        No
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
