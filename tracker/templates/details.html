@@ -24,6 +24,17 @@
 
     <br/>
     <div>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link {% if transactions_type == 'external' %} active {% endif %}" aria-current="page" href="{% url 'address_status' ethaddr=address.address %}?transactions_type=external">
+            External
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if transactions_type == 'internal' %} active {% endif %}" href="{% url 'address_status' ethaddr=address.address %}?transactions_type=internal">
+            Internal</a>
+        </li>
+      </ul>
       <table class="table">
         <thead>
         <tr>
@@ -43,15 +54,13 @@
       <div>
         <nav aria-label="Page navigation example">
           <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="{% url 'address_status' ethaddr=address.address %}?page={{ previous_page }}">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="{% url 'address_status' ethaddr=address.address %}?page={{ page }}">{{ page }}</a></li>
-            <li class="page-item"><a class="page-link" href="{% url 'address_status' ethaddr=address.address %}?page={{ next_page }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="{% url 'address_status' ethaddr=address.address %}?page={{ previous_page }}&transactions_type={{ transactions_type }}">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="{% url 'address_status' ethaddr=address.address %}?page={{ page }}&transactions_type={{ transactions_type }}">{{ page }}</a></li>
+            <li class="page-item"><a class="page-link" href="{% url 'address_status' ethaddr=address.address %}?page={{ next_page }}&transactions_type={{ transactions_type }}">Next</a></li>
           </ul>
         </nav>
       </div>
   {% endif %}
-
-
 
 
   </div>
