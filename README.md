@@ -1,8 +1,9 @@
 # Ethereum tracker
 
 _Tracks given Ethereum addresses and detects any changes to their balances_
-👨‍💻 J. Pedro
-Oliveira ([j.pedrodiasoliveira@gmail.com](mailto:j.pedrodiasoliveira@gmail.com))
+
+
+👨‍💻 J. Pedro Oliveira ([j.pedrodiasoliveira@gmail.com](mailto:j.pedrodiasoliveira@gmail.com))
 
 ### TL;DR
 

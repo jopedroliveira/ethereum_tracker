@@ -14,8 +14,8 @@ services:
   worker:
     # Build using the worker Dockerfile
     build:
-      context: .
-      dockerfile: worker.Dockerfile
+      context: infrastructure
+      dockerfile: infrastructure/worker.Dockerfile
     network_mode: host
     environment:
       C_FORCE_ROOT: "yes"
@@ -26,8 +26,8 @@ services:
   beat:
     # Build using the worker Dockerfile
     build:
-      context: .
-      dockerfile: beat.Dockerfile
+      context: infrastructure
+      dockerfile: infrastructure/beat.Dockerfile
     network_mode: host
     environment:
       rabbitmq_uri: amqp://127.0.0.1:5672
@@ -37,8 +37,8 @@ services:
 
   web:
     build:
-      context: .
-      dockerfile: web.Dockerfile
+      context: infrastructure
+      dockerfile: infrastructure/web.Dockerfile
     command: python manage.py runserver 0.0.0.0:8000 --settings=tracker.settings.production
     volumes:
       - .:/tracker
