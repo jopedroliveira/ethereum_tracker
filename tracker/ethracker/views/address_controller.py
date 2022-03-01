@@ -24,12 +24,22 @@ class AddressLogic:
     try:
       page = request.GET.get('page', 1)
       items_per_page = request.GET.get('items', 7)
+      transactions_filter = request.GET.get('transactions_type', 'external')
       ethaddr = kwargs['ethaddr'] if 'ethaddr' in kwargs else None
       address = Address.get_by_ethaddr(ethaddr)
 
+      if transactions_filter == "internal":
+        transactions_filter = "internal"
+        transactions_type = "txlistinternal"
+      else:
+        transactions_filter = "external"
+        transactions_type = "txlist"
+
+
+
       url = f"{settings.ETHSCAN_HOST}?" \
             f"module=account&" \
-            f"action=txlist&" \
+            f"action={transactions_type}&" \
             f"address=0x{address.address}&" \
             f"startblock=0&" \
             f"endblock=99999999&" \
@@ -47,7 +57,8 @@ class AddressLogic:
                  'transactions': response_data['result'],
                  'page': page,
                  'next_page': int(page)+1,
-                 'previous_page': int(page)-1 if int(page) > 1 else 1}
+                 'previous_page': int(page)-1 if int(page) > 1 else 1,
+                 'transactions_type': transactions_filter}
 
       return render(request, 'details.html', context)
     except Exception as e:
