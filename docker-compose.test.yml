@@ -3,8 +3,8 @@ version: "2.5"
 services:
   web_tests:
     build:
-      context: .
-      dockerfile: web.Dockerfile
+      context: infrastructure
+      dockerfile: infrastructure/web.Dockerfile
     command: python manage.py test ethracker.tests --settings=tracker.settings.test
     volumes:
       - .:/tracker
