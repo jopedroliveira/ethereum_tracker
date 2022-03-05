@@ -3,11 +3,12 @@ from tracker.settings.base import *
 DEBUG = False
 LOCAL = True
 HOST = 'http://localhost:8000'
+ALLOWED_HOSTS = ["localhost"]
 
 # ETHERSCAN API
 ETHSCAN_HOST = "https://api.etherscan.io/api"
 ETHSCAN_API_KEY = "C2USV4YSJ5NWVA3SECN9XJ48KF9JJ1EBVJ"
-
+ENVIRONMENT = 'production'
 # CELERY
 
 BROKER_URL = 'amqp://guest:guest@127.0.0.1:5672//'

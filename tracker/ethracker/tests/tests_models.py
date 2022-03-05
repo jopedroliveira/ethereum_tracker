@@ -23,7 +23,7 @@ class TestAddressModel(TransactionTestCase):
     Address.create("0123456789012345678901234567890123456732")
 
   def test_list_all(self):
-    self.assertQuerysetEqual(Address.objects.all().order_by('id'), Address.list_all(), transform=lambda x: x)
+    self.assertQuerysetEqual(Address.objects.all().order_by('-creation_date'), Address.list_all(), transform=lambda x: x)
 
   def test_get_by_ethaddr(self):
     self.assertEqual(Address.get_by_ethaddr('0123456789012345678901234567890123456789'), self.ad1)

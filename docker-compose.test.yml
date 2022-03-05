@@ -1,12 +1,13 @@
 version: "2.5"
 
 services:
+  # Deploy the broker.
   web_tests:
     build:
-      context: infrastructure
+      context: .
       dockerfile: infrastructure/web.Dockerfile
     command: python manage.py test ethracker.tests --settings=tracker.settings.test
     volumes:
-      - .:/tracker
+      - .:/tracker_tests
     ports:
       - "8000:8000"
