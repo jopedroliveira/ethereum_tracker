@@ -1,7 +1,9 @@
 from django.core.validators import RegexValidator, MinLengthValidator
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from .mixins import CoreModel
+
 
 address_validator = RegexValidator(r'^[a-fA-F0-9]*$',
                                    'Only hexadecimal characters are allowed.')
@@ -87,6 +89,8 @@ class Address(models.Model, CoreModel):
     Triggers a celery task to update the Address data
     :return:
     """
+    if settings.ENVIRONMENT == 'test':
+      return True
     from ..tasks import fetch_force_update_api
     fetch_force_update_api.delay(self)
 
