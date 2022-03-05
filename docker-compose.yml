@@ -14,7 +14,7 @@ services:
   worker:
     # Build using the worker Dockerfile
     build:
-      context: infrastructure
+      context: .
       dockerfile: infrastructure/worker.Dockerfile
     network_mode: host
     environment:
@@ -26,7 +26,7 @@ services:
   beat:
     # Build using the worker Dockerfile
     build:
-      context: infrastructure
+      context: .
       dockerfile: infrastructure/beat.Dockerfile
     network_mode: host
     environment:
@@ -37,12 +37,12 @@ services:
 
   web:
     build:
-      context: infrastructure
+      context: .
       dockerfile: infrastructure/web.Dockerfile
     command: python manage.py runserver 0.0.0.0:8000 --settings=tracker.settings.production
     volumes:
       - .:/tracker
     ports:
       - "8000:8000"
-    depends_on:
-      - beat
+    # depends_on:
+    #   - beat
