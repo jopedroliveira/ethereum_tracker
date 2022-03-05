@@ -7,6 +7,7 @@ HOST = 'http://localhost:8000'
 # ETHERSCAN API
 ETHSCAN_HOST = "https://api.etherscan.io/api"
 ETHSCAN_API_KEY = "C2USV4YSJ5NWVA3SECN9XJ48KF9JJ1EBVJ"
+ENVIRONMENT = 'local'
 
 # CELERY
 
